@@ -8,7 +8,6 @@ function createCard(cardData, cardDeleteCallback) {
   deleteButton.addEventListener("click", cardDeleteCallback);
   
   return cardTemplate;
-  console.log(cardTemplate)
 }
 
 function handleDelete(event) {

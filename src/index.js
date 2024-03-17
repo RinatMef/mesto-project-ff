@@ -1,3 +1,6 @@
+import './pages/index.css';
+import { initialCards } from './scripts/cards';
+
 const template = document.querySelector("#card-template").content;
 
 function createCard(cardData, cardDeleteCallback) {

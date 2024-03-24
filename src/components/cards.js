@@ -1,8 +1,4 @@
-import { openModal } from "./modal.js";
-
 const template = document.querySelector("#card-template").content;
-const modalTypeImage = document.querySelector(".popup_type_image");
-const modalTypeImageData = modalTypeImage.querySelector(".popup__image");
 const placesList = document.querySelector(".places__list");
 
 const createCard = (
@@ -30,23 +26,21 @@ const handleLikeButtonClick = (evt) => {
 };
 
 const handleDeleteButtonClick = (evt) => {
-  const card = evt.target.closest(".card");
+  const card = evt.target(".card");
   card.remove();
 };
 
-export const renderCards = (card, method = "append") => {
-  card.forEach((cardData) => {
-    const cardElement = createCard(
-      cardData,
-      handleDeleteButtonClick,
-      handleLikeButtonClick,
-      handleModalTypeImage
-    );
-    placesList[method](cardElement);
+export const renderCards = (cards, method = "append") => {
+  cards.forEach((cardData) => {
+    addCardToList(cardData, method);
   });
 };
 
-export const addCardToList = (cardData, method = "prepend") => {
+export const addCardToList = (
+  cardData,
+  handleModalTypeImage,
+  method = "prepend"
+) => {
   const cardElement = createCard(
     cardData,
     handleDeleteButtonClick,
@@ -54,14 +48,4 @@ export const addCardToList = (cardData, method = "prepend") => {
     handleModalTypeImage
   );
   placesList[method](cardElement);
-};
-
-const handleModalTypeImage = (evt) => {
-  const cardImage = evt.target.closest(".card__image");
-  if (cardImage) {
-    modalTypeImageData.src = cardImage.src;
-    modalTypeImageData.alt = cardImage.alt;
-    modalTypeImageData.textContent = cardImage.alt;
-    openModal(modalTypeImage);
-  }
 };

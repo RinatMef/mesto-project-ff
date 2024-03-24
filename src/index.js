@@ -34,7 +34,7 @@ const handleAddCardSubmit = (evt) => {
 };
 
 const handleModalTypeImage = (evt) => {
-  const cardImage = evt.target.closest(".card__image");
+  const cardImage = evt.target;
   if (cardImage) {
     modalTypeImageData.src = cardImage.src;
     modalTypeImageData.alt = cardImage.alt;

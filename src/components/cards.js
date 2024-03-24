@@ -26,7 +26,7 @@ const handleLikeButtonClick = (evt) => {
 };
 
 const handleDeleteButtonClick = (evt) => {
-  const card = evt.target(".card");
+  const card = evt.target.closest(".card");
   card.remove();
 };
 

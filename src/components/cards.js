@@ -1,7 +1,7 @@
 const template = document.querySelector("#card-template").content;
-const placesList = document.querySelector(".places__list");
 
-const createCard = (
+
+export const createCard = (
   cardData,
   cardDeleteCallback,
   cardLikeCallback,
@@ -21,31 +21,12 @@ const createCard = (
   return cardTemplate;
 };
 
-const handleLikeButtonClick = (evt) => {
+export const handleLikeButtonClick = (evt) => {
   evt.target.classList.toggle("card__like-button_is-active");
 };
 
-const handleDeleteButtonClick = (evt) => {
+export const handleDeleteButtonClick = (evt) => {
   const card = evt.target.closest(".card");
   card.remove();
 };
 
-export const renderCards = (cards, method = "append") => {
-  cards.forEach((cardData) => {
-    addCardToList(cardData, method);
-  });
-};
-
-export const addCardToList = (
-  cardData,
-  handleModalTypeImage,
-  method = "prepend"
-) => {
-  const cardElement = createCard(
-    cardData,
-    handleDeleteButtonClick,
-    handleLikeButtonClick,
-    handleModalTypeImage
-  );
-  placesList[method](cardElement);
-};

@@ -1,6 +1,6 @@
 import "./pages/index.css";
 import { initialCards } from "./components/initialCards.js";
-import { renderCards, addCardToList } from "./components/cards.js";
+import { createCard, handleLikeButtonClick, handleDeleteButtonClick  } from "./components/cards.js";
 import { openModal, closeModal } from "./components/modal.js";
 
 const modalTypeEdit = document.querySelector(".popup_type_edit");
@@ -14,6 +14,7 @@ const editProfileForm = document.forms.edit__profile;
 const newCardForm = document.forms.new__place;
 const modalTypeImage = document.querySelector(".popup_type_image");
 const modalTypeImageData = modalTypeImage.querySelector(".popup__image");
+const placesList = document.querySelector(".places__list");
 
 const handleEditFormSubmit = (evt) => {
   evt.preventDefault();
@@ -62,4 +63,24 @@ closeModalButtons.forEach((button) => {
   button.addEventListener("click", () => closeModal(popup));
 });
 
-renderCards(initialCards, handleModalTypeImage);
+const renderCards = (cards, method = "append") => {
+  cards.forEach((cardData) => {
+    addCardToList(cardData, handleModalTypeImage, method);
+  });
+};
+
+const addCardToList = (
+  cardData,
+  handleModalTypeImage,
+  method = "prepend"
+) => {
+  const cardElement = createCard(
+    cardData,
+    handleDeleteButtonClick,
+    handleLikeButtonClick,
+    handleModalTypeImage
+  );
+  placesList[method](cardElement);
+};
+
+renderCards(initialCards);

@@ -31,7 +31,7 @@ const handleAddCardSubmit = (evt) => {
   };
   closeModal(modalTypeNewCard);
   evt.target.reset();
-  addCardToList(cardObject, handleModalTypeImage);
+  addCardToList(cardObject);
 };
 
 const handleModalTypeImage = (evt) => {
@@ -65,13 +65,12 @@ closeModalButtons.forEach((button) => {
 
 const renderCards = (cards, method = "append") => {
   cards.forEach((cardData) => {
-    addCardToList(cardData, handleModalTypeImage, method);
+    addCardToList(cardData, method);
   });
 };
 
 const addCardToList = (
   cardData,
-  handleModalTypeImage,
   method = "prepend"
 ) => {
   const cardElement = createCard(

@@ -123,7 +123,6 @@ const handleAddCardSubmit = (evt) => {
     name: evt.target.place__name.value,
     link: evt.target.link.value,
   };
-<<<<<<< HEAD
   postCard(cardObject.name, cardObject.link)
     .then((card) => {
       const cardData = {
@@ -152,11 +151,6 @@ const handleAddCardSubmit = (evt) => {
       console.error("Ошибка при добавлении карточки:", err);
       addButtonPreloader(false, evt);
     });
-=======
-  closeModal(modalTypeNewCard);
-  evt.target.reset();
-  addCardToList(cardObject);
->>>>>>> d3c2f968261072e74e8de586065d773424991d1a
 };
 
 
@@ -202,7 +196,6 @@ closeModalButtons.forEach((button) => {
   button.addEventListener("click", () => closeModal(popup));
 });
 
-<<<<<<< HEAD
 const renderCards = (cards) => {
   cards.reverse().forEach((cardData) => {
     addCardToList(cardData);
@@ -210,18 +203,6 @@ const renderCards = (cards) => {
 };
 
 const addCardToList = (cardData) => {
-=======
-const renderCards = (cards, method = "append") => {
-  cards.forEach((cardData) => {
-    addCardToList(cardData, method);
-  });
-};
-
-const addCardToList = (
-  cardData,
-  method = "prepend"
-) => {
->>>>>>> d3c2f968261072e74e8de586065d773424991d1a
   const cardElement = createCard(
     cardData,
     handleCardRemove,

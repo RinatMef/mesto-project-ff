@@ -11,7 +11,14 @@
   border-radius: 2px;
   border: none;
   transition: visibility 0s, background 0.3s;
-  margin-top: 48px;
+  margin-top: 35px;
+}
+
+.popup__button_disabled {
+  background: transparent;
+  border: 1px solid #000;
+  opacity: .2;
+  color: #000;
 }
 
 .popup__button:hover {

@@ -7,6 +7,12 @@
 @import url('./__button/popup__button.css');
 @import url('./__caption/popup__caption.css');
 @import url('./__image/popup__image.css');
+@import url('./__fieldset/popup__form__set.css');
+@import url('./__form__input-error/popup__form__input-error.css');
+@import url('./__label-field/popup__label-field.css');
+@import url('./__input/popup__input_error.css');
+@import url('./__form__input-error/popup__form__input-error_active.css');
+
 
 .popup {
   font-family: 'Inter', Arial, sans-serif;

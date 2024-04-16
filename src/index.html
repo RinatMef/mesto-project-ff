@@ -48,11 +48,10 @@
                   class="popup__input popup__input_type_name"
                   id="form-name-input"
                   placeholder="Имя"
-                  pattern="^[a-zA-Zа-яА-Яё\s\-]+$"
+                  pattern="^(?!\s+$)[a-zA-Zа-яА-Яё\s\-]+$"
                   minlength="2"
                   maxlength="40"
                   data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-                  data-error-message-space="Текст не может состоять только из пробелов"
                   required
                 />
                 <span
@@ -66,12 +65,11 @@
                   class="popup__input popup__input_type_description"
                   id="form-description-input"
                   placeholder="Занятие"
-                  pattern="^[a-zA-Zа-яА-Яё\s\-]+$"
+                  pattern="^(?!\s+$)[a-zA-Zа-яА-Яё\s\-]+$"
                   minlength="2"
                   maxlength="200"
                   required
                   data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-                  data-error-message-space="Текст не может состоять только из пробелов"
                 />
                 <span
                   class="popup__form__input-error form-description-input-error"
@@ -97,13 +95,11 @@
                   class="popup__input popup__input_type_card-name"
                   id="place-name-input"
                   placeholder="Название"
-                  pattern="^[a-zA-Zа-яА-Яё\s\-]+$"
+                  pattern="^(?!\s+$)[a-zA-Zа-яА-Яё\s\-]+$"
                   minlength="2"
                   maxlength="30"
                   required
                   data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
-                  data-error-message-space="Текст не может состоять только из пробелов"
-                  
                 />
                 <span
                   class="popup__form__input-error place-name-input-error"

@@ -10,7 +10,7 @@ import {
   removeCard,
   removeLike,
   addLike,
-  patchUserAvatar
+  patchUserAvatar,
 } from "./components/api.js";
 
 const modalTypeEdit = document.querySelector(".popup_type_edit");
@@ -25,7 +25,7 @@ const editProfileForm = document.forms.edit__profile;
 const newCardForm = document.forms.new__place;
 const newAvatarForm = document.forms.new__avatar;
 const modalTypeImage = document.querySelector(".popup_type_image");
-const modalTypeNewAvatar = document.querySelector(".popup_type_new-avatar")
+const modalTypeNewAvatar = document.querySelector(".popup_type_new-avatar");
 const modalTypeImageData = modalTypeImage.querySelector(".popup__image");
 const modalTypeImageCaption = modalTypeImage.querySelector(".popup__caption");
 const placesList = document.querySelector(".places__list");
@@ -44,11 +44,11 @@ const handleEditAvatarFormSubmit = (evt) => {
   evt.preventDefault();
 
   const avatarLink = newAvatarForm.link.value;
-  
+
   addButtonPreloader(true, evt);
   patchUserAvatar(avatarLink)
     .then(() => {
-      userAvatar.style['background-image'] = `url('${avatarLink}')`;
+      userAvatar.style["background-image"] = `url('${avatarLink}')`;
     })
     .catch((err) => {
       console.error("Произошла ошибка:", err);
@@ -92,7 +92,7 @@ const handleEditFormSubmit = (evt) => {
 
 //функция проверки лайка карточки в DOM и ее отображение
 
-const hasBeenLikedInDom = (
+const checkLikedOnCard = (
   likeButton,
   likeCount,
   removeLike,
@@ -112,7 +112,9 @@ const hasBeenLikedInDom = (
         likeCount.textContent = data.likes.length;
         likeButton.classList.add("card__like-button_is-active");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.error("Произошла ошибка:", err);
+      });
   }
 };
 
@@ -141,18 +143,17 @@ const handleAddCardSubmit = (evt) => {
         handleModalTypeImage,
         removeLike,
         addLike,
-        hasBeenLikedInDom
+        checkLikedOnCard
       );
       addButtonPreloader(false, evt);
       closeModal(modalTypeNewCard);
       evt.target.reset();
     })
     .catch((err) => {
-      console.error("Ошибка при добавлении карточки:", err);
+      console.error("Произошла ошибка:", err);
       addButtonPreloader(false, evt);
     });
 };
-
 
 const handleModalTypeImage = (evt) => {
   const cardImage = evt.target;
@@ -172,10 +173,9 @@ userAvatar.addEventListener("click", (evt) => {
   clearValidation(newAvatarForm, validationConfig);
 });
 
-newAvatarForm.addEventListener('submit', handleEditAvatarFormSubmit);
+newAvatarForm.addEventListener("submit", handleEditAvatarFormSubmit);
 
 editProfileForm.addEventListener("submit", handleEditFormSubmit);
-
 
 editModalButton.addEventListener("click", () => {
   editProfileForm.name.value = nameUser.textContent;
@@ -209,26 +209,24 @@ const addCardToList = (cardData) => {
     handleModalTypeImage,
     removeLike,
     addLike,
-    hasBeenLikedInDom
+    checkLikedOnCard
   );
   placesList.prepend(cardElement);
 };
 
-
 //обработчик удаления карточки
-function handleCardRemove(evt) {
-  const card = evt.target.closest('.card');
+const handleCardRemove = (evt) => {
+  const card = evt.target.closest(".card");
   const id = card.id;
 
   removeCard(id)
     .then(() => {
       card.remove();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error("Произошла ошибка:", err));
 }
 
-
-function getInitialCards() {
+const getInitialCards = () => {
   fetchCards()
     .then((res) => {
       renderCards(res);
@@ -237,21 +235,21 @@ function getInitialCards() {
 }
 
 // функция, отображающая данные пользователя на странице
-function renderUserData() {
+const renderUserData = () => {
   fetchUserData()
     .then((data) => {
       nameUser.textContent = data.name;
       nameJob.textContent = data.about;
-      userAvatar.style['background-image'] = `url("${data.avatar}")`;
+      userAvatar.style["background-image"] = `url("${data.avatar}")`;
       editProfileForm.name.value = data.name;
       editProfileForm.description.value = data.about;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error("Произошла ошибка:", err));
 }
 
 const promises = [renderUserData, getInitialCards];
 Promise.all(promises)
   .then((resArr) => resArr.forEach((res) => res()))
-  .catch((err) => console.log(err));
+  .catch((err) => console.error("Произошла ошибка:", err));
 
 enableValidation(validationConfig);

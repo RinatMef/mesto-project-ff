@@ -1,6 +1,3 @@
-const token = "a7574e94-9952-403a-9a36-eac9e02b7546";
-// const config.baseUrl = "https://mesto.nomoreparties.co/v1/wff-cohort-11/";
-
 const config = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/wff-cohort-11/',
   headers: {
@@ -8,6 +5,7 @@ const config = {
     'Content-Type': 'application/json'
   }
 }
+
 export let userID;
 
 const request = (url, options) => {
@@ -37,8 +35,6 @@ export const fetchUserData = () => {
     return res;
   });
 };
-
-
 
 const fetchUserId = (id) => {
   userID = id;
@@ -81,7 +77,6 @@ export const removeCard = (cardId) => {
 });
 };
 
- 
 export const removeLike = (cardId) => {
   return request(`${config.baseUrl}cards/likes/${cardId}`, {
     method: 'DELETE',

@@ -12,15 +12,9 @@ const hideInputError = (formElement, inputElement) => {
   errorElement.textContent = "";
 };
 
-
 const checkInputValidity = (formElement, inputElement) => {
-  const value = inputElement.value.trim();
-  if (inputElement.type === "url") {
-    inputElement.setCustomValidity("");
-  } else if (inputElement.validity.patternMismatch) {
+  if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
-  }else if (value === "") {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessageSpace);
   } else {
     inputElement.setCustomValidity("");
   }
@@ -78,7 +72,7 @@ export const enableValidation = (formConfig) => {
   });
 };
 
-export function clearValidation(formElement, formConfig) {
+export const clearValidation = (formElement, formConfig) => {
   const inputList = Array.from(
     formElement.querySelectorAll(formConfig.inputSelector)
   );

@@ -8,7 +8,7 @@ export const createCard = (
   handleOpenModalTypeImage,
   removeLike,
   addLike,
-  hasBeenLikedInDOM
+  checkLikedOnCard
 ) => {
   const cardTemplate = template.cloneNode(true);
   const cardElement = cardTemplate.querySelector(".card");
@@ -18,33 +18,37 @@ export const createCard = (
   const cardTitle = cardTemplate.querySelector(".card__title");
   const cardLikeQty = cardTemplate.querySelector(".card__like-qty");
   const cardId = cardData["_id"];
-  
 
-  cardElement.setAttribute('id', cardId);
+  cardElement.setAttribute("id", cardId);
 
   if (checkLike(cardData.likes, userID)) {
     likeButton.classList.add("card__like-button_is-active");
   }
 
-  if (cardData.owner['_id'] === userID) {
+  if (cardData.owner["_id"] === userID) {
     deleteButton.addEventListener("click", cardDeleteCallback);
   } else {
     deleteButton.remove();
   }
-  
 
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
   cardTitle.textContent = cardData.name;
   cardLikeQty.textContent = cardData.likes.length;
 
-  
-  likeButton.addEventListener("click", (evt) => {  hasBeenLikedInDOM(evt.target, cardLikeQty, removeLike, addLike, cardData["_id"])});
+  likeButton.addEventListener("click", (evt) => {
+    checkLikedOnCard(
+      evt.target,
+      cardLikeQty,
+      removeLike,
+      addLike,
+      cardData["_id"]
+    );
+  });
   cardImage.addEventListener("click", handleOpenModalTypeImage);
   return cardTemplate;
 };
 
-
 function checkLike(likes, userId) {
-  return likes.some(like => like['_id'] === userId);
+  return likes.some((like) => like["_id"] === userId);
 }

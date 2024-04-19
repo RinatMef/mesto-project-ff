@@ -1,7 +1,7 @@
 import "./pages/index.css";
 import { createCard } from "./components/cards.js";
 import { openModal, closeModal } from "./components/modal.js";
-import { enableValidation, clearValidation } from "./components/validation.js";
+import { enableValidation, clearValidation} from "./components/validation.js";
 import {
   fetchUserData,
   patchUserData,
@@ -32,11 +32,13 @@ const placesList = document.querySelector(".places__list");
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
+  formFieldset: ".popup__form__set",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "popup__button_disabled",
   inputErrorClass: "popup__input_error",
   errorClass: "popup__form__input-error_active",
 };
+export let userId;
 
 //обрабочики событий
 
@@ -56,7 +58,7 @@ const handleEditAvatarFormSubmit = (evt) => {
     .finally(() => {
       addButtonPreloader(false, evt);
       closeModal(modalTypeNewAvatar);
-      newAvatarForm.reset;
+      newAvatarForm.reset();
     });
 };
 
@@ -168,7 +170,7 @@ const handleModalTypeImage = (evt) => {
 
 // слушатели событий
 userAvatar.addEventListener("click", (evt) => {
-  newAvatarForm.reset;
+  newAvatarForm.reset();
   openModal(modalTypeNewAvatar);
   clearValidation(newAvatarForm, validationConfig);
 });
@@ -224,32 +226,23 @@ const handleCardRemove = (evt) => {
       card.remove();
     })
     .catch((err) => console.error("Произошла ошибка:", err));
-}
-
-const getInitialCards = () => {
-  fetchCards()
-    .then((res) => {
-      renderCards(res);
-    })
-    .catch((err) => console.log(err));
-}
+};
 
 // функция, отображающая данные пользователя на странице
-const renderUserData = () => {
-  fetchUserData()
-    .then((data) => {
-      nameUser.textContent = data.name;
-      nameJob.textContent = data.about;
-      userAvatar.style["background-image"] = `url("${data.avatar}")`;
-      editProfileForm.name.value = data.name;
-      editProfileForm.description.value = data.about;
-    })
-    .catch((err) => console.error("Произошла ошибка:", err));
+const renderUserData = (data) => {
+  nameUser.textContent = data.name;
+  nameJob.textContent = data.about;
+  userAvatar.style["background-image"] = `url("${data.avatar}")`;
+  editProfileForm.name.value = data.name;
+  editProfileForm.description.value = data.about;
 }
 
-const promises = [renderUserData, getInitialCards];
-Promise.all(promises)
-  .then((resArr) => resArr.forEach((res) => res()))
+Promise.all([fetchUserData(), fetchCards()])
+  .then(([userData, cardsData]) => {
+    userId = userData._id;
+    renderUserData(userData);
+    renderCards(cardsData);
+  })
   .catch((err) => console.error("Произошла ошибка:", err));
 
 enableValidation(validationConfig);

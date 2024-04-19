@@ -1,4 +1,4 @@
-import { userID } from "./api";
+import { userId } from "../index";
 
 const template = document.querySelector("#card-template").content;
 
@@ -21,12 +21,14 @@ export const createCard = (
 
   cardElement.setAttribute("id", cardId);
 
-  if (checkLike(cardData.likes, userID)) {
+  if (checkLike(cardData.likes, userId)) {
     likeButton.classList.add("card__like-button_is-active");
   }
 
-  if (cardData.owner["_id"] === userID) {
-    deleteButton.addEventListener("click", cardDeleteCallback);
+  if (cardData.owner["_id"] === userId) {
+    deleteButton.addEventListener("click", (evt) =>
+      cardDeleteCallback(evt, cardElement, cardData)
+    );
   } else {
     deleteButton.remove();
   }
@@ -45,7 +47,9 @@ export const createCard = (
       cardData["_id"]
     );
   });
-  cardImage.addEventListener("click", handleOpenModalTypeImage);
+  cardImage.addEventListener("click", (evt) =>
+    handleOpenModalTypeImage(evt, cardElement, cardData)
+  );
   return cardTemplate;
 };
 

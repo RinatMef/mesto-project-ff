@@ -1,12 +1,11 @@
 const config = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/wff-cohort-11/',
+  baseUrl: "https://mesto.nomoreparties.co/v1/wff-cohort-11/",
   headers: {
-    authorization: 'a7574e94-9952-403a-9a36-eac9e02b7546',
-    'Content-Type': 'application/json'
-  }
-}
+    authorization: "a7574e94-9952-403a-9a36-eac9e02b7546",
+    "Content-Type": "application/json",
+  },
+};
 
-export let userID;
 
 const request = (url, options) => {
   return fetch(url, options).then(checkResponse);
@@ -22,87 +21,66 @@ const checkResponse = (res) => {
 export const fetchCards = () => {
   return request(`${config.baseUrl}cards`, {
     method: "GET",
-    headers: config.headers
+    headers: config.headers,
   });
 };
 
 export const fetchUserData = () => {
   return request(`${config.baseUrl}users/me`, {
     method: "GET",
-    headers: config.headers
-  }).then((res) => {
-    fetchUserId(res["_id"]);
-    return res;
+    headers: config.headers,
   });
-};
-
-const fetchUserId = (id) => {
-  userID = id;
 };
 
 export const patchUserData = (userName, userAbout) => {
   return request(`${config.baseUrl}users/me`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
       name: userName,
-      about: userAbout
-    })
-  }).then((res) => {
-    return res;
+      about: userAbout,
+    }),
   });
 };
 
 export const postCard = (title, link) => {
   return request(`${config.baseUrl}cards`, {
-    method: 'POST',
+    method: "POST",
     headers: config.headers,
     body: JSON.stringify({
       name: title,
-      link: link
-    })
-  }).then((res) => {
-    console.log(res)
-    return res;
+      link: link,
+    }),
   });
 };
 
 export const removeCard = (cardId) => {
   return request(`${config.baseUrl}cards/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers
-  })
-.then((res) => {
-  return res;
-});
+    method: "DELETE",
+    headers: config.headers,
+  });
 };
 
 export const removeLike = (cardId) => {
   return request(`${config.baseUrl}cards/likes/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers
-  }).then((res) => {
-    console.log(res);
-    return res;
+    method: "DELETE",
+    headers: config.headers,
   });
 };
 
 export const addLike = (cardId) => {
   return request(`${config.baseUrl}cards/likes/${cardId}`, {
-    method: 'PUT',
-    headers: config.headers
-  }).then((res) => {
-    console.log(res);
-    return res;
+    method: "PUT",
+    headers: config.headers,
   });
 };
 
 export const patchUserAvatar = (link) => {
   return request(`${config.baseUrl}users/me/avatar`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      avatar: link
-    })
+      avatar: link,
+    }),
   });
 };
